@@ -1,5 +1,6 @@
 use std::borrow::Cow;
 
+// Cow(Clone-on-Write) 版本
 pub fn insert_prefix_cow<'a, T>(strs: T, prefix: &'a str) -> Vec<Cow<'a, String>>
 where
     T: IntoIterator<Item = &'a String>,
@@ -16,7 +17,9 @@ where
         .collect::<Vec<Cow<'a, String>>>()
 }
 
-pub fn _insert_prefix_clone<'a>(strs: impl IntoIterator<Item = &'a String>, prefix: &'a str) -> Vec<String> {
+// Clone 版本
+#[allow(unused)]
+pub fn insert_prefix_clone<'a>(strs: impl IntoIterator<Item = &'a String>, prefix: &'a str) -> Vec<String> {
     strs.into_iter()
         .map(|s| match s.starts_with(prefix) {
             true => Some(s.clone()),
